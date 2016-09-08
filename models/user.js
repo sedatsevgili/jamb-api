@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var restful = require('node-restful');
+var mongoose = restful.mongoose;
 var bcrypt = require('bcrypt-nodejs');
 
 var UserSchema = new mongoose.Schema({
