@@ -1,0 +1,23 @@
+{
+  "name": "jamb",
+  "version": "0.0.1",
+  "description": "just a micro blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sevgilisedat/jamb.git"
+  },
+  "keywords": [
+    "micro",
+    "blog"
+  ],
+  "author": "sevgilisedat",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/sevgilisedat/jamb/issues"
+  },
+  "homepage": "https://github.com/sevgilisedat/jamb#readme"
+}
