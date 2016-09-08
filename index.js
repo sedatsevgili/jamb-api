@@ -6,6 +6,7 @@ var restful = require('node-restful');
 var mongoose = restful.mongoose;
 
 var UserModel = require('./models/user');
+var PostModel = require('./models/post');
 
 var app = express();
 
@@ -17,8 +18,8 @@ app.use(methodOverride());
 
 mongoose.connect('mongodb://localhost:27017/jamb');
 
-var UserResource = restful.model('user', UserModel.schema).methods(['get', 'post', 'put', 'delete']);
-UserResource.register(app, '/users');
+restful.model('user', UserModel.schema).methods(['get', 'post', 'put', 'delete']).register(app, '/users');
+restful.model('post', PostModel.schema).methods(['get', 'post', 'put', 'delete']).register(app, '/posts');
 
 app.listen(3000);
 
