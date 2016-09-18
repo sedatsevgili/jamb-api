@@ -32,6 +32,7 @@
     "node-restful": "^0.2.5",
     "oauth2orize": "^1.5.0",
     "passport": "^0.3.2",
+    "passport-http": "^0.3.0",
     "passport-http-bearer": "^1.0.1"
   }
 }
