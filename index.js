@@ -49,8 +49,8 @@ postResource.before('get', AuthModule.isBearerAuthenticated)
   .before('delete', AuthModule.isBearerAuthenticated);
 postResource.register(app, '/posts');
 
-var clientResource = restful.model('client', ClientModel.schema).methods(['get', 'post']);
-clientResource.register(app, '/clients');
+/*var clientResource = restful.model('client', ClientModel.schema).methods(['get', 'post']);
+clientResource.register(app, '/clients');*/
 
 router.route('/authorize')
 	.get(AuthModule.isUserAuthenticated, OAuth2Controller.authorization)
