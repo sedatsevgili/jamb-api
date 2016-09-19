@@ -1,5 +1,5 @@
 {
-  "name": "jamb - api",
+  "name": "jamb-api",
   "version": "0.0.1",
   "description": "just a micro blog api",
   "main": "index.js",
