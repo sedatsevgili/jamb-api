@@ -1,14 +1,14 @@
 {
-  "name": "jamb",
+  "name": "jamb - api",
   "version": "0.0.1",
-  "description": "just a micro blog",
+  "description": "just a micro blog api",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sevgilisedat/jamb.git"
+    "url": "git+https://github.com/sevgilisedat/jamb-api.git"
   },
   "keywords": [
     "micro",
@@ -17,9 +17,9 @@
   "author": "sevgilisedat",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/sevgilisedat/jamb/issues"
+    "url": "https://github.com/sevgilisedat/jamb-api/issues"
   },
-  "homepage": "https://github.com/sevgilisedat/jamb#readme",
+  "homepage": "https://github.com/sevgilisedat/jamb-api#readme",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
