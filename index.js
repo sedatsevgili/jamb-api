@@ -34,7 +34,8 @@ app.use(session({
 }));
 app.use(passport.initialize());
 
-mongoose.connect('mongodb://localhost:27017/jamb');
+//mongoose.connect('mongodb://localhost:27017/jamb');
+mongoose.connect(process.env.MONGODB_URI);
 
 /*var userResource = restful.model('user', UserModel.schema).methods(['get', 'post', 'put', 'delete']);
 userResource.before('get',AuthModule.isBearerAuthenticated)
@@ -65,6 +66,7 @@ router.route('/me')
 
 app.use('/', router);
 
-app.listen(3000);
+var port = process.env.PORT ? process.env.PORT : 3000;
+app.listen(port);
 
-console.log('listening on ' + 3000);
+console.log('listening on ' + port);
