@@ -1,5 +1,4 @@
-var restful = require('node-restful');
-var mongoose = restful.mongoose;
+var mongoose = require('mongoose');
 
 var TokenSchema = new mongoose.Schema({
   value: {
