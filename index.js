@@ -12,6 +12,7 @@ var PostModel = require('./models/post');
 var ClientModel = require('./models/client');
 
 var OAuth2Controller = require('./controllers/oauth2');
+var PostController = require('./controllers/post');
 var UserController = require('./controllers/user');
 
 var AuthModule = require('./modules/auth');
@@ -44,7 +45,16 @@ router.route('/oauth2/token')
 	.post(AuthModule.isClientAuthenticated, OAuth2Controller.token);
 
 router.route('/me')
-	.get(AuthModule.isBearerAuthenticated, UserController.getMe)
+	.get(AuthModule.isBearerAuthenticated, UserController.getMe);
+
+router.route('/posts')
+	.get(AuthModule.isBearerAuthenticated, PostController.getPosts)
+	.post(AuthModule.isBearerAuthenticated, PostController.postPosts);
+
+router.route('/posts/:post_id')
+	.get(AuthModule.isBearerAuthenticated, PostController.getPost)
+	.put(AuthModule.isBearerAuthenticated, PostController.putPost)
+	.delete(AuthModule.isBearerAuthenticated, PostController.deletePost);
 
 app.use('/', router);
 
