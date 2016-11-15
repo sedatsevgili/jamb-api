@@ -82,7 +82,7 @@ server.exchange(oauth2orize.exchange.code(function(client, code, redirectUri, ca
 						return callback(err);
 					}
 
-					callback(null, token, refreshToken, {expires_in: expirationDate});
+					callback(null, token.value, refreshToken.value, {expires_in: expirationDate});
 				})
 			});
 		});
@@ -126,7 +126,7 @@ server.exchange(oauth2orize.exchange.refreshToken(function(client, refreshTokenV
 						return callback(err);
 					}
 
-					callback(null, token, refreshToken, {expires_in: expirationDate});
+					callback(null, token.value, refreshToken.value, {expires_in: expirationDate});
 				})
 			});
 		});
