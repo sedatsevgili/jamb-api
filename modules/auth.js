@@ -59,6 +59,15 @@ passport.use(new BearerStrategy(
 				return callback(null, false);
 			}
 
+			if(new Date() > token.expires_in) {
+				token.remove(function(err) {
+					if(err) {
+						return callback(err);
+					}
+					return callback(null, false);
+				});
+			}
+
 			User.findOne({_id: token.userId}, function(err, user) {
 				if(err) {
 					return callback(err);

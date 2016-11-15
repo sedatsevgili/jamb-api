@@ -2,6 +2,7 @@ var oauth2orize = require('oauth2orize');
 var User = require('../models/user');
 var Client = require('../models/client');
 var Token = require('../models/token');
+var RefreshToken = require('../models/refresh_token');
 var Code = require('../models/code');
 
 var server = oauth2orize.createServer();
@@ -58,10 +59,12 @@ server.exchange(oauth2orize.exchange.code(function(client, code, redirectUri, ca
 				return callback(err);
 			}
 
+			var expirationDate = new Date(new Date().getTime() + 3600 * 1000);
 			var token = new Token({
 				value: uid(256),
 				clientId: authCode.clientId,
-				userId: authCode.userId
+				userId: authCode.userId,
+				expiresAt: expirationDate
 			});
 
 			token.save(function(err) {
@@ -69,10 +72,65 @@ server.exchange(oauth2orize.exchange.code(function(client, code, redirectUri, ca
 					return callback(err);
 				}
 
-				callback(null, token);
+				var refreshToken = new RefreshToken({
+					value: uid(256),
+					clientId: authCode.clientId,
+					userId: authCode.userId
+				});
+				refreshToken.save(function(err) {
+					if(err) {
+						return callback(err);
+					}
+
+					callback(null, token, refreshToken, {expires_in: expirationDate});
+				})
 			});
 		});
 	});
+}));
+
+server.exchange(oauth2orize.exchange.refreshToken(function(client, refreshTokenValue, scope, callback) {
+	RefreshToken.findOne({value: refreshTokenValue, clientId: client._id}, function(err, refreshToken) {
+		if(err) {
+			return callback(err);
+		}
+
+		if(!refreshToken) {
+			return callback(null, false);
+		}
+
+		refreshToken.remove(function(err) {
+			if(err) {
+				return callback(err);
+			}
+
+			var expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+			var token = new Token({
+				value: uid(256),
+				clientId: refreshToken.clientId,
+				userId: refreshToken.userId,
+				expiresAt: expirationDate
+			});
+			token.save(function(err) {
+				if(err) {
+					return callback(err);
+				}
+
+				var refreshToken = new RefreshToken({
+					value: uid(256),
+					clientId: token.clientId,
+					userId: token.userId
+				});
+				refreshToken.save(function(err) {
+					if(err) {
+						return callback(err);
+					}
+
+					callback(null, token, refreshToken, {expires_in: expirationDate});
+				})
+			});
+		});
+	})
 }));
 
 exports.authorization = [
