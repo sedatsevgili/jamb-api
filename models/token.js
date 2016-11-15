@@ -12,6 +12,10 @@ var TokenSchema = new mongoose.Schema({
   clientId: {
     type: String,
     required: true
+  },
+  expiresAt: {
+    type: Date,
+    required: true
   }
 });
 
