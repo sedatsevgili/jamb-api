@@ -16,7 +16,11 @@ var PostSchema = new mongoose.Schema({
 	hidden: {
 		type: Boolean,
 		default: false
-	}
+	},
+	tags: [{
+		type: mongoose.Schema.ObjectId,
+		ref: 'Tags'
+	}]
 });
 
 module.exports = mongoose.model('Post', PostSchema);
