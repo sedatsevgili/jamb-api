@@ -1,5 +1,6 @@
 var Post = require('../models/post');
 var Tag = require('../models/tag');
+var TagBinder = require('../modules/tag_binder');
 
 exports.postPosts = function(req, res) {
   var post = new Post();
@@ -8,40 +9,20 @@ exports.postPosts = function(req, res) {
   post.createdAt = new Date();
   post.hidden = req.body.hidden;
 
-  if (req.body.tags && (typeof req.body.tags) == 'object') {
-    for(var i = 0; i < req.body.tags.length; i++) {
-      var tagName = req.body.tags[i];
-
-      if((typeof tagName) === 'string') {
-        var tag = Tag.findOne({'name': tagName}, function(err, tagModel) {
-          if(err) {
-            return res.send(err);
-          }
-
-          // we don't have any tag document. so create it.
-          if(!tagModel) {
-            var tagModel = new Tag();
-            tagModel.name = tagName;
-            tagModel.userId = req.user._id;
-            tagModel.save(function(err) {
-              if(err) {
-                return res.send(err);
-              }
-            });
-
-          }
-        });
-      }
-    }
-  }
-
-  post.save(function(err) {
+  TagBinder.bindTags(post, req.body.tags, function(err, post) {
     if(err) {
       return res.send(err);
     }
 
-    res.json(post);
-  })
+    post.save(function(err) {
+      if(err) {
+        return res.send(err);
+      }
+
+      res.json(post);
+    });
+  });
+  
 }
 
 exports.getPosts = function(req, res) {
