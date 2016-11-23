@@ -22,7 +22,7 @@ exports.postPosts = function(req, res) {
       res.json(post);
     });
   });
-  
+
 }
 
 exports.getPosts = function(req, res) {
@@ -52,13 +52,22 @@ exports.putPost = function(req, res) {
     }
     post.content = req.body.content;
     post.hidden = req.body.hidden;
-    post.save(function(err) {
+    post.tags = [];
+
+    TagBinder.bindTags(post, req.body.tags, function(err, post) {
       if(err) {
         return res.send(err);
       }
 
-      return res.json(post);
+      post.save(function(err) {
+        if(err) {
+          return res.send(err);
+        }
+
+        res.json(post);
+      });
     });
+
   });
 }
 
