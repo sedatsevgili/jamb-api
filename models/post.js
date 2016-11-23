@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var TagSchema = require('./tag').schema;
 
 var PostSchema = new mongoose.Schema({
 	content: {
@@ -16,7 +17,8 @@ var PostSchema = new mongoose.Schema({
 	hidden: {
 		type: Boolean,
 		default: false
-	}
+	},
+	tags: [TagSchema]
 });
 
 module.exports = mongoose.model('Post', PostSchema);
