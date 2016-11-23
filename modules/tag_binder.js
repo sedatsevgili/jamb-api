@@ -5,7 +5,7 @@ var currentProcessedTagCount = 0;
 var sentTagCount = 0;
 
 pushTag = function(postModel, tagModel, callback) {
-  postModel.tags.push(tagModel._id);
+  postModel.tags.push(tagModel);
   if(currentProcessedTagCount == sentTagCount) {
     return callback(false, postModel);
   }
