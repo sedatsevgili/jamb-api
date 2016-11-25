@@ -35,7 +35,7 @@ app.use(session({
 app.use(passport.initialize());
 
 //mongoose.connect('mongodb://localhost:27017/jamb');
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.JAMB_API_MONGODB_URI);
 
 router.route('/oauth2/authorize')
 	.get(AuthModule.isUserAuthenticated, OAuth2Controller.authorization)
@@ -58,7 +58,7 @@ router.route('/posts/:post_id')
 
 app.use('/', router);
 
-var port = process.env.PORT ? process.env.PORT : 3000;
+var port = process.env.JAMB_API_PORT ? process.env.JAMB_API_PORT : 3000;
 app.listen(port);
 
 console.log('listening on ' + port);
