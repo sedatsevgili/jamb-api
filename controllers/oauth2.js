@@ -4,7 +4,7 @@ var Client = require('../models/client');
 var Token = require('../models/token');
 var RefreshToken = require('../models/refresh_token');
 var Code = require('../models/code');
-
+var bcrypt = require('bcrypt-nodejs');
 var server = oauth2orize.createServer();
 
 server.serializeClient(function(client, callback) {
@@ -131,6 +131,47 @@ server.exchange(oauth2orize.exchange.refreshToken(function(client, refreshTokenV
 			});
 		});
 	})
+}));
+
+server.exchange(oauth2orize.exchange.password(function(client, username, password, scope, callback) {
+	User.findOne({username: username}, function(err, user) {
+		if(err) {
+			return callback(err);
+		}
+		if(!user) {
+			return callback(err, false);
+		}
+		bcrypt.compare(password, user.password, function (err, res) {
+			if(err) {
+				return callback(err);
+			}
+			var expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+			var token = new Token({
+				value: uid(256),
+				clientId: client.id,
+				userId: user._id,
+				expiresAt: expirationDate
+			});
+			token.save(function(err) {
+				if(err) {
+					return callback(err);
+				}
+
+				var refreshToken = new RefreshToken({
+					value: uid(256),
+					clientId: token.clientId,
+					userId: token.userId
+				});
+				refreshToken.save(function(err) {
+					if(err) {
+						return callback(err);
+					}
+
+					callback(null, token.value, refreshToken.value, {expires_in: expirationDate});
+				})
+			});
+		});
+	});
 }));
 
 exports.authorization = [
