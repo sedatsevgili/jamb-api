@@ -60,7 +60,7 @@ passport.use(new BearerStrategy(
 			}
 
 			if(new Date() > token.expiresAt) {
-				token.remove(function(err) {
+				return token.remove(function(err) {
 					if(err) {
 						return callback(err);
 					}
