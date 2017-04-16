@@ -4,6 +4,7 @@
   "description": "just a micro blog api",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "mocha tests/ --recursive"
   },
   "repository": {
