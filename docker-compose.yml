@@ -1,0 +1,14 @@
+web:
+  build: .
+  links:
+    - mongo
+  ports:
+    - 3000:3000
+  volumes:
+    - .:/src  
+  environment:
+    JAMB_API_MONGODB_URI:  "mongodb://mongo:27017/jamb"
+mongo:
+  image: mongo
+  ports:
+    - 27017:27017
