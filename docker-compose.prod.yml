@@ -9,14 +9,8 @@ web:
     - /app/node_modules
   environment:
     JAMB_API_MONGODB_URI:  "mongodb://mongo:27017/jamb"
-    NODE_ENV: development
+    NODE_ENV: production
 mongo:
   image: mongo
   ports:
     - 27017:27017
-mongo-admin:
-  links:
-    - mongo
-  image: mongo-express
-  ports:
-   - 8081:8081    
