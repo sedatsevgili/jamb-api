@@ -1,22 +1,25 @@
-web:
-  build: .
-  links:
-    - mongo
-  ports:
-    - 3000:3000
-  volumes:
-    - .:/app
-    - /app/node_modules
-  environment:
-    JAMB_API_MONGODB_URI:  "mongodb://mongo:27017/jamb"
-    NODE_ENV: development
-mongo:
-  image: mongo
-  ports:
-    - 27017:27017
-mongo-admin:
-  links:
-    - mongo
-  image: mongo-express
-  ports:
-   - 8081:8081    
+version: "3"
+
+services:
+  jambapi_web:
+    image: sedatsevgili/jambapi_web
+    links:
+      - mongo
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      JAMB_API_MONGODB_URI:  "mongodb://mongo:27017/jamb"
+      NODE_ENV: development
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+  mongo-admin:
+    links:
+      - mongo
+    image: mongo-express
+    ports:
+    - 8081:8081    
