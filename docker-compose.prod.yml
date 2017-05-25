@@ -2,7 +2,7 @@ version: "3"
 
 services:
   jambapi_web:
-    image: sedatsevgili/jambapi_web
+    image: sedatsevgili/jambapi_web:latest
     links:
       - mongo
     ports:
@@ -12,7 +12,7 @@ services:
       - /app/node_modules
     environment:
       JAMB_API_MONGODB_URI:  "mongodb://mongo:27017/jamb"
-      NODE_ENV: development
+      NODE_ENV: production
   mongo:
     image: mongo
     ports:
